@@ -1,0 +1,39 @@
+
+-- 1. Products Table (for the drinks themselves)
+CREATE TABLE Products (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ProductName TEXT NOT NULL,
+    BaseQuantity REAL NOT NULL,
+    BaseUnit TEXT NOT NULL
+);
+
+-- 2. Ingredients Table (for guaranteed ingredients and modifiers)
+CREATE TABLE Ingredients (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    IngredientName TEXT NOT NULL,
+    Unit TEXT NOT NULL
+);
+
+-- 3. ProductIngredients Table (for assigning base ingredients to drinks)
+CREATE TABLE ProductIngredients (
+    ProductId INTEGER,
+    IngredientId INTEGER,
+    QuantityPerDrink REAL NOT NULL,
+    FOREIGN KEY(ProductId) REFERENCES Products(Id),
+    FOREIGN KEY(IngredientId) REFERENCES Ingredients(Id),
+    PRIMARY KEY(ProductId, IngredientId)
+);
+
+-- 4. SalesData Table (for tracking drink sales and modifiers)
+CREATE TABLE SalesData (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ProductName TEXT NOT NULL,
+    DrinksSold INTEGER NOT NULL,
+    ModifierName TEXT NOT NULL,
+    ModifierUnitsSold INTEGER NOT NULL
+);
+-- 5. UserSettings Table (for storing user password)
+CREATE TABLE UserSettings (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    PasswordHash TEXT NOT NULL  -- Store a hashed version of the password
+);
